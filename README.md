@@ -1,2 +1,2 @@
-# java10-talk
+# Java 10 in Practice
 Examples for Java 10 in Practice talk
