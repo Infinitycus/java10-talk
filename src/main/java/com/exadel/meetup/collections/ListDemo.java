@@ -1,5 +1,7 @@
 package com.exadel.meetup.collections;
 
+import com.exadel.meetup.Annotations.Before;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -10,7 +12,7 @@ import java.util.stream.Stream;
 public class ListDemo {
 
     public static void main(String[] args) {
-        List<String> unmodifiableList = createUnmodifiableList();
+        List<String> unmodifiableList = createUnmodifiableListFromList();
         System.out.println(unmodifiableList);
 
         List<String> listFromArray = Arrays.asList("I'm", "an", "unmodifiable", "list");
@@ -21,7 +23,8 @@ public class ListDemo {
         System.out.println(listFromStream);
     }
 
-    private static List<String> createUnmodifiableList() {
+    @Before
+    private static List<String> createUnmodifiableListFromList() {
         List<String> list = new ArrayList<>();
         list.add("I'm");
         list.add("an");
