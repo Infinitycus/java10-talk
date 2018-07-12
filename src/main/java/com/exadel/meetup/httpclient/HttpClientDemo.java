@@ -1,11 +1,14 @@
 package com.exadel.meetup.httpclient;
 
+import com.exadel.meetup.Annotations.After;
+
 import java.net.URI;
 
 import jdk.incubator.http.HttpClient;
 import jdk.incubator.http.HttpRequest;
 import jdk.incubator.http.HttpResponse;
 
+@After
 public class HttpClientDemo {
 
     public static void main(String[] args) throws Exception {

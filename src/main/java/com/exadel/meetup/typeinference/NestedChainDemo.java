@@ -4,23 +4,66 @@ import static java.util.stream.Collectors.counting;
 
 import com.google.common.base.Splitter;
 
+import com.exadel.meetup.Annotations.After;
+import com.exadel.meetup.Annotations.Before;
+
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class NestedChainDemo {
 
+    @Before
+    class GetPopularWordWithOneStream {
+        public Optional<String> getPopularWord(List<String> words) {
+            return words.stream()
+                    .collect(Collectors.groupingBy(word -> word, counting()))
+                    .entrySet()
+                    .stream()
+                    .max(Map.Entry.comparingByValue())
+                    .map(Map.Entry::getKey);
+        }
+    }
+
+    @Before
+    class GetPopularWordWithSeveralStreams {
+        public Optional<String> getPopularWord(List<String> words) {
+            Map<String, Long> countsByWords = words.stream()
+                    .collect(Collectors.groupingBy(word -> word, counting()));
+
+            Optional<Map.Entry<String, Long>> maxEntry = countsByWords
+                    .entrySet().stream()
+                    .max(Map.Entry.comparingByValue());
+
+            return maxEntry.map(Map.Entry::getKey);
+        }
+    }
+
+    @After
+    class GetPopularWordWithSeveralStreamsAndVar {
+        public Optional<String> getPopularWord(List<String> words) {
+            var countsByWords = words.stream()
+                    .collect(Collectors.groupingBy(word -> word, counting()));
+
+            var maxEntry = countsByWords
+                    .entrySet().stream()
+                    .max(Map.Entry.comparingByValue());
+
+            return maxEntry.map(Map.Entry::getKey);
+        }
+    }
+
     public static void main(String[] args) {
-        var words = generateWords();
+        new NestedChainDemo().demo();
+    }
 
-        var result = words.stream()
-                .collect(Collectors.groupingBy(word -> word, counting()))
-                .entrySet()
-                .stream()
-                .max(Map.Entry.comparingByValue())
-                .map(Map.Entry::getKey);
+    private void demo() {
+        List<String> words = generateWords();
 
-        System.out.println(result.orElseThrow());
+        System.out.println(new GetPopularWordWithOneStream().getPopularWord(words).orElseThrow());
+        System.out.println(new GetPopularWordWithSeveralStreams().getPopularWord(words).orElseThrow());
+        System.out.println(new GetPopularWordWithSeveralStreamsAndVar().getPopularWord(words).orElseThrow());
     }
 
     private static List<String> generateWords() {

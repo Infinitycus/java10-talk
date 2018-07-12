@@ -1,10 +1,13 @@
 package com.exadel.meetup.httpclient;
 
+import com.exadel.meetup.Annotations.Before;
+
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.util.EntityUtils;
 
+@Before
 public class ApacheHttpClientDemo {
 
     public static void main(String[] args) throws Exception {

@@ -1,10 +1,13 @@
 package com.exadel.meetup.httpclient;
 
+import com.exadel.meetup.Annotations.Before;
+
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+@Before
 public class HttpUrlConnectionDemo {
 
     public static void main(String[] args) throws Exception {

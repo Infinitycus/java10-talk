@@ -10,22 +10,6 @@ import java.util.List;
 
 public class StackWalkers {
 
-    public static void main(String[] args) {
-        new StackWalkers().walk();
-    }
-
-    public void walk() {
-        new Walker1().walk();
-    }
-
-    private class Walker1 {
-        private void walk() {
-            new WalkerFromException().walk();
-            new WalkerFromSecurityManager().walk();
-            new WalkerNew().walk();
-        }
-    }
-
     @Before
     private class WalkerFromException {
         private void walk() {
@@ -84,6 +68,22 @@ public class StackWalkers {
                     stream.dropWhile(frame -> frame.getClassName().startsWith("com.exadel.meetup"))
                             .collect(toList()));
             System.out.println(frames);
+        }
+    }
+
+    public static void main(String[] args) {
+        new StackWalkers().walk();
+    }
+
+    public void walk() {
+        new Walker1().walk();
+    }
+
+    private class Walker1 {
+        private void walk() {
+            new WalkerFromException().walk();
+            new WalkerFromSecurityManager().walk();
+            new WalkerNew().walk();
         }
     }
 }

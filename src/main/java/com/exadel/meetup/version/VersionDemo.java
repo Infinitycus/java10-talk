@@ -5,15 +5,6 @@ import com.exadel.meetup.Annotations.Before;
 
 public class VersionDemo {
 
-    public static void main(String[] args) {
-        new VersionDemo().demo();
-    }
-
-    private void demo() {
-        System.out.println(new GetJavaVersionFromProperty().getJavaVersion());
-        System.out.println(new GetJavaVersionFromRuntime().getJavaVersion());
-    }
-
     @Before
     class GetJavaVersionFromProperty {
         public int getJavaVersion() {
@@ -33,5 +24,14 @@ public class VersionDemo {
             Runtime.Version version = Runtime.version();
             return version.feature();
         }
+    }
+
+    public static void main(String[] args) {
+        new VersionDemo().demo();
+    }
+
+    private void demo() {
+        System.out.println(new GetJavaVersionFromProperty().getJavaVersion());
+        System.out.println(new GetJavaVersionFromRuntime().getJavaVersion());
     }
 }

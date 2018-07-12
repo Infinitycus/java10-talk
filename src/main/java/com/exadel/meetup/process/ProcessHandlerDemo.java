@@ -5,11 +5,6 @@ import java.time.Instant;
 import java.util.concurrent.CompletableFuture;
 
 public class ProcessHandlerDemo {
-    public static void main(String[] args) {
-        ProcessHandlerDemo processHandlerDemo = new ProcessHandlerDemo();
-        processHandlerDemo.listAllProcesses();
-        processHandlerDemo.demoActionOnTerminating();
-    }
 
     private void listAllProcesses() {
         ProcessHandle.allProcesses()
@@ -43,11 +38,17 @@ public class ProcessHandlerDemo {
         try {
             Process process = new ProcessBuilder("notepad.exe").start();
             ProcessHandle processHandle = process.toHandle();
-            CompletableFuture<ProcessHandle> onExit = processHandle.onExit();
-            onExit.get();
-            onExit.thenAccept(ph -> System.out.printf("PID %d terminated%n", ph.pid()));
+            CompletableFuture<ProcessHandle> onExitHandler = processHandle.onExit();
+            onExitHandler.get();
+            onExitHandler.thenAccept(ph -> System.out.printf("PID %d terminated%n", ph.pid()));
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public static void main(String[] args) {
+        ProcessHandlerDemo processHandlerDemo = new ProcessHandlerDemo();
+        processHandlerDemo.listAllProcesses();
+        processHandlerDemo.demoActionOnTerminating();
     }
 }

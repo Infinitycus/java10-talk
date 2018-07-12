@@ -11,6 +11,7 @@ public class InitialDemo {
         Map<String, List<ResultHolder>> resultsByGroup = ResultUtils.generateResults()
                 .stream()
                 .collect(groupingBy(ResultHolder::getGroupName));
+
         System.out.println(resultsByGroup);
     }
 

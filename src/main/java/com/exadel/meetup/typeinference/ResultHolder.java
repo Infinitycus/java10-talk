@@ -11,15 +11,15 @@ class ResultHolder {
         this.result = result;
     }
 
-    String getGroupName() {
+    public String getGroupName() {
         return groupName;
     }
 
-    String getName() {
+    public String getName() {
         return name;
     }
 
-    int getTotal() {
+    public int getTotal() {
         return result;
     }
 

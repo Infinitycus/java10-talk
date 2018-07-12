@@ -1,5 +1,8 @@
 package com.exadel.meetup.collections;
 
+import com.exadel.meetup.Annotations.After;
+import com.exadel.meetup.Annotations.Before;
+
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
@@ -9,25 +12,50 @@ import java.util.stream.Stream;
 
 public class SetDemo {
 
-    public static void main(String[] args) {
-        Set<String> unmodifiableSet = createUnmodifiableSet();
-        System.out.println(unmodifiableSet);
-
-        Set<String> setFromArray = Collections.unmodifiableSet(
-                new HashSet<>(Arrays.asList("I'm", "an", "unmodifiable", "set")));
-        System.out.println(setFromArray);
-
-        Set<String> setFromStream = Collections.unmodifiableSet(Stream.of("I'm", "an", "unmodifiable", "set")
-                .collect(Collectors.toSet()));
-        System.out.println(setFromStream);
+    @Before
+    class CreateUnmodifiableSetVeryOldWay {
+        public Set<String> createUnmodifiableSet() {
+            Set<String> set = new HashSet<>();
+            set.add("I'm");
+            set.add("an");
+            set.add("unmodifiable");
+            set.add("set");
+            return Collections.unmodifiableSet(set);
+        }
     }
 
-    private static Set<String> createUnmodifiableSet() {
-        Set<String> set = new HashSet<>();
-        set.add("I'm");
-        set.add("an");
-        set.add("unmodifiable");
-        set.add("set");
-        return Collections.unmodifiableSet(set);
+    @Before
+    class CreateUnmodifiableSetByArraysAsList {
+        public Set<String> createUnmodifiableSet() {
+            return Collections.unmodifiableSet(
+                    new HashSet<>(Arrays.asList("I'm", "an", "unmodifiable", "set")));
+        }
+    }
+
+    @Before
+    class CreateUnmodifiableSetByStream {
+        public Set<String> createUnmodifiableSet() {
+            return Collections.unmodifiableSet(
+                    Stream.of("I'm", "an", "unmodifiable", "set")
+                            .collect(Collectors.toSet()));
+        }
+    }
+
+    @After
+    class CreateUnmodifiableSetByFabricMethod {
+        public Set<String> createUnmodifiableSet() {
+            return Set.of("I'm", "an", "unmodifiable", "set");
+        }
+    }
+
+    public static void main(String[] args) {
+        new SetDemo().demo();
+    }
+
+    private void demo() {
+        System.out.println(new CreateUnmodifiableSetVeryOldWay().createUnmodifiableSet());
+        System.out.println(new CreateUnmodifiableSetByArraysAsList().createUnmodifiableSet());
+        System.out.println(new CreateUnmodifiableSetByStream().createUnmodifiableSet());
+        System.out.println(new CreateUnmodifiableSetByFabricMethod().createUnmodifiableSet());
     }
 }
